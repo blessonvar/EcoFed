@@ -12,7 +12,7 @@ We proposes EcoFed - a communication efficient framework for DPFL systems. EcoFe
 <p align = "center">
 <img src = "Fig2-bv1.png">
 </p>
-<p align = "center">
+<p>
 <b>Fig.1 The training pipeline of classic FL, vanilla DPFL, local loss-based DPFL and EcoFed for three rounds of training. Classic FL transfers the entire model from the devices to the server at the end of each round. Vanilla DPFL only needs to upload a partitioned device-side model at the end of each round. However, Vanilla DPFL transfers the activation and gradient for each batch sample. Local loss-based DPFL reduces the communication by half since the gradients are computed locally. EcoFed reduces communication further as it transfers the activation only periodically (for example, once in two rounds) and further compresses the size of the activations.</b>
 </p>
 
