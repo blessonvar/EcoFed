@@ -17,7 +17,7 @@ if testbed == 'PI':
 # Dataset configration
 dataset_name = 'CIFAR10'
 home = sys.path[0].split('EcoFed')[0]
-dataset_path = home + 'EcoFed_Project/dataset/'+ dataset_name +'/'
+dataset_path = home + 'EcoFed/dataset/'+ dataset_name +'/'
 ## Data length CIFAR10:50000, CIFAR100:50000, MNIST:60000, FMNIST:60000
 ## num_classes
 if dataset_name == 'CIFAR10':
@@ -84,7 +84,7 @@ R = 500 # FL rounds
 LR = 0.01 # Learning rate
 B = 10 # Batch size
 initilization = 'partial_pretrain' # Initilization, random, partial_pretrain and holistic_pretrain
-pre_trained_weights_path = home + 'EcoFed_Project/pretrained/vgg11_imagenet_32.pth'
+pre_trained_weights_path = home + 'EcoFed/pretrained/vgg11_imagenet_32.pth'
 finetuning = False # Retraining
 
 ## training modes: 'FL', 'SFL', 'LGL', 'FedGKT', 'ActionFed'.
