@@ -5,13 +5,8 @@ testbed = 'SM'
 # Network configration
 if testbed == 'SM': # Single machine
 	SERVER_ADDR= '127.0.0.1'
-	#SERVER_PORT = 56100 # 52000, 53000, 54000, 55000, 56000
-	SERVER_PORT = 65100 # 61000, 62000, 63000, 64000, 65000
+	SERVER_PORT = 52000 # 52000, 53000, 54000, 55000, 56000
 	IP2INDEX= {'127.0.0.1:'+str(SERVER_PORT+1):0, '127.0.0.1:'+str(SERVER_PORT+2):1, '127.0.0.1:'+str(SERVER_PORT+3):2, '127.0.0.1:'+str(SERVER_PORT+4):3, '127.0.0.1:'+str(SERVER_PORT+5):4}
-if testbed == 'VM':
-	SERVER_ADDR= '172.16.0.10'
-	SERVER_PORT = 52000
-	IP2INDEX= {'172.16.0.11':0, '172.16.0.12':1, '172.16.0.13':2, '172.16.0.14':3, '172.16.0.15':4}
 if testbed == 'PI':
 	SERVER_ADDR= '192.168.1.129'
 	SERVER_PORT = 52000
@@ -31,12 +26,6 @@ if dataset_name == 'CIFAR10':
 if dataset_name == 'CIFAR100':
 	N = 50000
 	num_classes = 100
-if dataset_name == 'MNIST':
-	N = 60000
-	num_classes = 10
-if dataset_name == 'FMNIST':
-	N = 60000
-	num_classes = 10
 
 # Model configration
 model_name = 'VGG11'
@@ -83,37 +72,13 @@ if dataset_name == 'CIFAR10' or dataset_name == 'CIFAR100':
 
 	,'Auxiliary_Net' : [('FC', 128 * 8 * 8, num_classes)]
 }
-if dataset_name == 'MNIST' or dataset_name == 'FMNIST':
-	model_cfg = {
-	# MP: MaxPooling (kernerl, stride)
-	'VGG11' : [('CBR', 3, 64, 3, 1, 1), ('MP', 2, 2),
-				('CBR', 64, 128, 3, 1, 1),('MPP', 2, 2, 1),
-				('CBR', 128, 256, 3, 1, 1),('CBR', 256, 256, 3, 1, 1),('MP', 2, 2),
-				('CBR', 256, 512, 3, 1, 1),('CBR', 512, 512, 3, 1, 1),('MP', 2, 2),
-				('CBR', 512, 512, 3, 1, 1),('CBR', 512, 512, 3, 1, 1),
-				#('DP', 0.5), 
-				('FCR', 512 * 2 * 2, 4096),
-				#('DP', 0.5), 
-				('FCR', 4096, 4096),
-				('FC', 4096, num_classes)]
-
-	,'ResNet9' : [('CBR', 3, 64, 3, 1, 1), ('MP', 2, 2),
-				('CBR', 64, 128, 3, 1, 1),('MPP', 2, 2, 1), 
-				# Each RB block has two CBR layers
-				('RBMPD', 128, 256, 3, 1, 1, 2, 2), 
-				('RBMPD', 256, 512, 3, 1, 1, 2, 2),
-				('RBAAP', 512, 512, 3, 1, 1, 1, 1),
-				('FC', 512 * 1 * 1, num_classes)]
-
-	,'Auxiliary_Net' : [('FC', 128 * 8 * 8, num_classes)]
-}
 
 # FL setting
-SEED = 2
+SEED = 0
 K = 5 # Number of connected devices
 C = 4 # Number of simulation clusters
 ALPHA = 0.2 # Client sampling ratio
-NON_IID = True # Whether use non_iid data generator
+NON_IID = False # Whether use non_iid data generator
 NUM_SHARDS = 500 # Number of shards
 R = 500 # FL rounds
 LR = 0.01 # Learning rate
@@ -127,4 +92,4 @@ train_mode = 'ActionFed'
 if train_mode == 'FL':  
 	OP = [[-1 for j in range(K)] for i in range(R)]
 else:
-	OP = [[4 for j in range(K)] for i in range(R)]
+	OP = [[2 for j in range(K)] for i in range(R)]

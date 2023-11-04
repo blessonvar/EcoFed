@@ -34,7 +34,28 @@ The repository contains the source code of EcoFed. The overall architecture is d
 The code currently supports two modes: centralized simulation and real distributed training.
 
 ### Setting up the environment
-TBD
+The code is tested on Python 3 with Pytorch version 1.4 and torchvision 0.5.
+
+To run in a real distributed testbed. Please install Pytorch and torchvision on each IoT device (for example, Raspberry Pis as used in this work). One can install from pre-built PyTorch and torchvision pip wheel. Download respective pip wheel as follows:
+- Pyotrch: https://github.com/FedML-AI/FedML-IoT/tree/master/pytorch-pkg-on-rpi
+
+All configuration options are given in `config.py`, which contains the architecture, model, and FL training hyperparameters.
+Note that `config.py` file must be changed at the source edge server and at each device.  
+
+```
+testbed = 'SM'
+# Network configration
+if testbed == 'SM': # Single machine
+	SERVER_ADDR= '127.0.0.1'
+	SERVER_PORT = 52000 # 52000, 53000, 54000, 55000, 56000
+	IP2INDEX= {'127.0.0.1:'+str(SERVER_PORT+1):0, '127.0.0.1:'+str(SERVER_PORT+2):1, '127.0.0.1:'+str(SERVER_PORT+3):2, '127.0.0.1:'+str(SERVER_PORT+4):3, '127.0.0.1:'+str(SERVER_PORT+5):4}
+if testbed == 'PI':
+	SERVER_ADDR= '192.168.1.129'
+	SERVER_PORT = 52000
+	IP2INDEX= {'192.168.1.38:'+str(SERVER_PORT+1):0, '192.168.1.104:'+str(SERVER_PORT+2):1, '192.168.1.212:'+str(SERVER_PORT+3):2, '192.168.1.130:'+str(SERVER_PORT+4):3, '192.168.1.37:'+str(SERVER_PORT+5):4}
+	## Mapping the hostname to IP
+	HOST2IP = {'pi41':'192.168.1.38', 'pi42':'192.168.1.104', 'pi43':'192.168.1.212', 'pi44':'192.168.1.130', 'pi45':'192.168.1.37'}
+```
 
 ### Citation
 TBD
