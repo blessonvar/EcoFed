@@ -42,9 +42,11 @@ To run in a real distributed testbed. Please install Pytorch and torchvision on 
 All configuration options are given in `config.py`, which contains the architecture, model, and FL training hyperparameters.
 Note that `config.py` file must be changed at the source edge server and at each device.  
 
+#### Network configuration
+SM is used for simulation test. For real distributed test using Raspberry Pis, please change the ips and hostnames accordingly.
 ```
 testbed = 'SM'
-# Network configration
+# Network configuration
 if testbed == 'SM': # Single machine
 	SERVER_ADDR= '127.0.0.1'
 	SERVER_PORT = 52000 # 52000, 53000, 54000, 55000, 56000
@@ -55,6 +57,46 @@ if testbed == 'PI':
 	IP2INDEX= {'192.168.1.38:'+str(SERVER_PORT+1):0, '192.168.1.104:'+str(SERVER_PORT+2):1, '192.168.1.212:'+str(SERVER_PORT+3):2, '192.168.1.130:'+str(SERVER_PORT+4):3, '192.168.1.37:'+str(SERVER_PORT+5):4}
 	## Mapping the hostname to IP
 	HOST2IP = {'pi41':'192.168.1.38', 'pi42':'192.168.1.104', 'pi43':'192.168.1.212', 'pi44':'192.168.1.130', 'pi45':'192.168.1.37'}
+```
+
+#### FL hyperparameters
+The total number of clients trained at each round is equal to K * C. The code will sequentially train each cluster, and K clients within each cluster will train in parallel. When all C clusters have completed training, one round of FL training is completed.
+
+```
+# FL setting
+SEED = 0
+K = 5 # Number of connected devices
+C = 4 # Number of simulation clusters
+ALPHA = 0.2 # Client sampling ratio
+NON_IID = False # Whether use non_iid data generator
+NUM_SHARDS = 500 # Number of shards
+R = 500 # FL rounds
+LR = 0.01 # Learning rate
+B = 10 # Batch size
+initilization = 'partial_pretrain' # Initilization, random, partial_pretrain and holistic_pretrain
+pre_trained_weights_path = home + 'EcoFed_Project/pretrained/vgg11_imagenet_32.pth'
+finetuning = False # Retraining
+```
+
+#### To run the code in simulation:
+Change 'testbed' to 'SM' in the config and ensure that the number of 'python clientrun_simulation.py' in 'run_sim.sh' is set to K.
+
+```
+sh run_sim.sh cuda
+```
+
+#### To run the code in distributed testbed:
+Change 'testbed' to 'PI' in the config.
+
+##### Launch EcoFed server at the server
+
+```
+python serverrun_simulation.py cpu
+```
+
+##### Launch EcoFed at each IoT devices, e.g., device k
+```
+python clientrun_simulation.py k cpu
 ```
 
 ### Citation
