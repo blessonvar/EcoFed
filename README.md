@@ -21,9 +21,17 @@ It is experimentally demonstrated that EcoFed can reduce the communication cost 
 Details of EcoFed can be found in our preprint article entitled, [EcoFed: Efficient Communication for DNN Partitioning-based Federated Learning](https://arxiv.org/pdf/2304.05495.pdf), Arxiv, 2023. The final version is under review of TPDS.
 
 ### Code Structure
-The repository contains the source code of EcoFed.
+The repository contains the source code of EcoFed. The overall architecture is divided as follows:
 
-TBD
+- EcoFed
+  - core
+    - server - Code for server object 
+    - client - Code for client object
+    - pretraining - Code for centralized pretraining 
+    - data_generator - Code for I.I.D. and Non-I.I.D. data generator
+    - client_sampler - Code for client sampler of each round
+
+The code currently supports two modes: centralized simulation and real distributed training.
 
 ### Setting up the environment
 TBD
