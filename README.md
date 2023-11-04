@@ -9,14 +9,16 @@ While current research reduces the communication introduced by DNN partitioning 
 
 We proposes EcoFed - a communication efficient framework for DPFL systems. EcoFed eliminates the transmission of the gradient by developing pre-trained initialization of the DNN model on the device for the first time. This reduces the accuracy degradation seen in local loss-based methods. In addition, EcoFed proposes a novel replay buffer mechanism and implements a quantization-based compression technique to reduce the transmission of the activation. Figure 1 illustrates the training pipeline of classic FL, vanilla DPFL, local loss-based DPFL and EcoFed.
 
-It is experimentally demonstrated that EcoFed can reduce the communication cost by up to 133x and accelerate training by up to 21x when compared to classic FL. Compared to vanilla DPFL, EcoFed achieves a 16x communication reduction and 2.86x training time speed-up. \
-
 <p align = "center">
 <img src = "Fig2-bv1.png">
 </p>
 <p align = "center">
 <b>Fig.1 The training pipeline of classic FL, vanilla DPFL, local loss-based DPFL and EcoFed for three rounds of training. Classic FL transfers the entire model from the devices to the server at the end of each round. Vanilla DPFL only needs to upload a partitioned device-side model at the end of each round. However, Vanilla DPFL transfers the activation and gradient for each batch sample. Local loss-based DPFL reduces the communication by half since the gradients are computed locally. EcoFed reduces communication further as it transfers the activation only periodically (for example, once in two rounds) and further compresses the size of the activations.</b>
 </p>
+
+It is experimentally demonstrated that EcoFed can reduce the communication cost by up to 133x and accelerate training by up to 21x when compared to classic FL. Compared to vanilla DPFL, EcoFed achieves a 16x communication reduction and 2.86x training time speed-up.
+
+Details of EcoFed can be found in our preprint article entitled, [EcoFed: Efficient Communication for DNN Partitioning-based Federated Learning](https://arxiv.org/pdf/2304.05495.pdf), Arxiv, 2023. The final version is under review of TPDS.
 
 ### Code Structure
 The repository contains the source code of EcoFed.
